@@ -1,0 +1,30 @@
+{% extends '5dashboard.html' %}
+
+{% block content %}
+<div class="flex items-center justify-center h-[92vh]">
+    <div class="container mx-auto p-6 bg-gradient-to-r from-gray-100 to-white shadow-md rounded-lg max-w-md border border-gray-300">
+        <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center">📚 Return Book</h1>
+        <form method="post" class="space-y-5">
+            {% csrf_token %}
+            
+            <!-- Return Date -->
+            <div>
+                <label for="returned_on" class="block text-sm font-medium text-gray-600 mb-1">Return Date</label>
+                <input type="date" id="returned_on" name="returned_on" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 text-gray-700 placeholder-gray-400" placeholder="Select return date" />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-right">
+                <button 
+                    type="submit" 
+                    class="w-full bg-gradient-to-r from-green-500 to-green-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:from-green-600 hover:to-green-800 focus:ring-2 focus:ring-green-400 focus:ring-offset-2"
+                >
+                    Mark as Returned
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

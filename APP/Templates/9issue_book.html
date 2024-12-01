@@ -1,0 +1,68 @@
+{% extends '5dashboard.html' %}
+
+{% block content %}
+<div class="container mx-auto p-6 bg-gradient-to-r from-gray-100 to-white shadow-md rounded-lg max-w-md border border-gray-300">
+    <h1 class="text-2xl font-bold text-gray-800 mb-6 text-center tracking-wide">📘 Issue a Book</h1>
+    <form method="post" class="space-y-5">
+        {% csrf_token %}
+
+        <!-- User Name -->
+        <div>
+            <label for="user" class="block text-sm font-medium text-gray-600 mb-1">User Name</label>
+            <input 
+                type="text" 
+                name="user" 
+                id="user" 
+                class="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-2 focus:ring-blue-400 focus:border-blue-400 sm:text-sm placeholder-gray-500" 
+                placeholder="Enter user's name" 
+                required 
+            />
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+            <label for="phone_number" class="block text-sm font-medium text-gray-600 mb-1">Phone Number</label>
+            <div class="rounded-md shadow-sm border border-gray-300 px-3 py-2 focus-within:ring-2 focus-within:ring-blue-400 focus-within:border-blue-400">
+                {{ form.phone_number }}
+            </div>
+        </div>
+
+        <!-- Book Title -->
+        <div>
+            <label for="book" class="block text-sm font-medium text-gray-700 mb-2">Book Title</label>
+            <div class="relative">
+                <select name="book" id="book" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                    {% if available_books %}
+                        {% for book in available_books %}
+                            <option value="{{ book.id }}">
+                                {{ book.title }}
+                            </option>
+                        {% endfor %}
+                    {% else %}
+                        <option value="">No books available</option>
+                    {% endif %}
+                </select>
+            </div>
+        </div>
+        
+        
+        <!-- Issue Date -->
+        <div>
+            <label for="issue_date" class="block text-sm font-medium text-gray-600 mb-1">Issue Date</label>
+            <div class="rounded-md shadow-sm border border-gray-300 px-3 py-2 focus-within:ring-2 focus-within:ring-blue-400 focus-within:border-blue-400">
+                {{ form.issue_date }}
+            </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-right">
+            <button 
+                type="submit" 
+                class="w-full bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-800 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+            >
+                Issue Book
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <nav class="bg-orange-950 p-4 fixed w-full z-10 top-0 left-0">
+        <div class="mx-auto flex justify-end">
+            <ul class="flex space-x-8 mr-9 font-bold text-orange-950">
+                <li><button class="bg-white text-black p-3 rounded-full" onclick="window.location.href='{% url 'home' %}'">Home</button></li>
+                <li><button class="bg-white text-black p-3 rounded-full" onclick="window.location.href='{% url 'signup' %}'">Login / Create User</button></li>
+                <li><button class="bg-white text-black p-3 rounded-full" onclick="window.location.href='{% url 'about' %}'">About</button></li>
+            </ul>   
+        </div>
+    </nav>
+
+    <div class="h-screen w-screen relative">
+        <img src="../static/home.jpg" alt="Full Screen Image" class="h-full w-full object-cover opacity-70">
+        <div class="bg-white shadow-lg rounded-lg p-8 w-full max-w-md absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+            <h2 class="text-2xl font-bold text-center text-gray-800 mb-6">Create an Account</h2>
+            <form method="POST" action="{% url 'signup' %}">
+                {% csrf_token %}
+                <div class="mb-4">
+                    <label for="username" class="block text-sm font-medium text-gray-600">Username</label>
+                    <input type="text" id="username" name="username" placeholder="Enter your username" class="w-full p-3 border border-gray-300 rounded-lg mt-2" required>
+                </div>
+                <div class="mb-4">
+                    <label for="email" class="block text-sm font-medium text-gray-600">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" class="w-full p-3 border border-gray-300 rounded-lg mt-2" required>
+                </div>
+                <div class="mb-4">
+                    <label for="phone_number" class="block text-sm font-medium text-gray-600">Phone Number</label>
+                    <input type="text" id="phone_number" name="phone_number" placeholder="Enter your phone number" class="w-full p-3 border border-gray-300 rounded-lg mt-2" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-sm font-medium text-gray-600">Password</label>
+                    <input type="password" id="password" name="password" placeholder="Create a password" class="w-full p-3 border border-gray-300 rounded-lg mt-2" required>
+                </div>
+                <div class="mb-6">
+                    <label for="confirm_password" class="block text-sm font-medium text-gray-600">Confirm Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" class="w-full p-3 border border-gray-300 rounded-lg mt-2" required>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 text-white py-3 rounded-lg hover:bg-blue-600 focus:outline-none">Sign Up</button>
+                <p class="text-center text-sm text-gray-600 mt-4">Already have an account? <a href="{% url 'login' %}" class="text-blue-500 hover:underline">Login</a></p>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

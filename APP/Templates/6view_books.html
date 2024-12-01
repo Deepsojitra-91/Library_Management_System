@@ -1,0 +1,75 @@
+{% extends '5dashboard.html' %}
+
+{% block content %}
+<div class="container mx-auto px-4 py-8">
+    <div class="flex justify-between items-center mb-6">
+        <h1 class="text-3xl font-extrabold text-gray-800">Book List</h1>
+        <div>
+            <button onclick="window.location.href='{% url 'add_book' %}'" type="submit" class="w-40 bg-blue-600 text-white font-medium py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                <i class="fa-solid fa-plus fa-lg"></i> Add Book
+            </button>
+        </div>
+    </div>
+
+    <div class="overflow-x-auto bg-white rounded-lg shadow-lg">
+        <table class="w-full text-sm text-left text-gray-500 border-collapse">
+            <thead class="text-white uppercase bg-blue-700 h-16">
+                <tr class="text-sm">
+                    <th class="px-4 py-2 border border-gray-300 text-center w-5">No</th>
+                    <th class="px-4 py-2 border border-gray-300 text-center w-20">Cover</th>
+                    <th class="px-4 py-2 border border-gray-300 text-center">Title</th>
+                    <th class="px-4 py-2 border border-gray-300 text-center w-60">Author</th>
+                    <th class="px-4 py-2 border border-gray-300 text-center w-60">
+                        <select id="category-filter" class="border rounded-lg w-44 p-2 bg-blue-700" onchange="window.location.href='?category=' + this.value + '&availability={{ availability_filter }}'">
+                            <option value="">All Categories</option>
+                            {% for category in categories %}
+                                <option class="bg-white text-black text-sm font-bold" value="{{ category }}" {% if category == category_filter %}selected{% endif %}>{{ category }}</option>
+                            {% endfor %}
+                        </select>
+                    </th>
+                    <th class="px-4 py-2 border border-gray-300 text-center w-48 "><select id="availability-filter" class="border rounded-lg p-2 bg-blue-700 w-44" onchange="window.location.href='?availability=' + this.value + '&category={{ category_filter }}'">
+                        <option value="">All Availability</option>
+                        <option class="bg-white text-green-800 text-sm font-bold" value="available" {% if availability_filter == 'available' %}selected{% endif %}>Available</option>
+                        <option class="bg-white text-red-800 text-sm font-bold" value="not_available" {% if availability_filter == 'not_available' %}selected{% endif %}>Not Available</option>
+                    </select></th>
+                    <th class="px-4 py-2 border border-gray-300 text-center w-40">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                    <tr class="bg-white hover:bg-gray-200 transition duration-300 text-gray-900">
+                        <td class="px-4 py-2 border border-gray-300 text-base font-bold text-slate-800">{{ forloop.counter }}</td>
+                        <td class="px-4 py-2 border border-gray-300">
+                            {% if book.cover_image %}
+                                <img src="{{ book.cover_image.url }}" alt="Cover of {{ book.title }}" class="w-20 h-30 object-cover rounded">
+                            {% else %}
+                                <span class="text-gray-400">No cover</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-base px-4 py-2 border border-gray-300 font-medium text-gray-900">{{ book.title }}</td>
+                        <td class="text-base px-4 py-2 border border-gray-300 ">{{ book.author }}</td>
+                        <td class="text-base px-4 py-2 border border-gray-300 text-center ">{{ book.category }}</td>
+                        <td class="text-base px-4 py-2 border border-gray-300 text-center ">
+                            {% if book.is_available %}
+                                <span class="bg-green-100 text-green-800 py-1 px-2 rounded-full text-base font-semibold">Available</span>
+                            {% else %}
+                                <span class="bg-red-100 text-red-800 py-1 px-2 rounded-full text-base font-semibold">Not Available</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-4 py-2 border border-gray-300  h-full">
+                            <div class="flex justify-center items-center gap-4 h-full">
+                                <a href="{% url 'edit_book' book.id %}" class="text-blue-600 hover:text-blue-800 font-medium transition duration-200"><i class="fa-solid fa-pen-to-square fa-xl"></i></a>
+                                <a href="{% url 'delete_book' book.id %}" class="text-red-600 hover:text-red-800 font-medium transition duration-200"><i class="fa-solid fa-trash fa-xl"></i></a>
+                            </div>
+                        </td>
+                    </tr>
+                {% empty %}
+                    <tr>
+                        <td colspan="7" class="px-4 py-2 text-center border border-gray-300 text-gray-600">No books available</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

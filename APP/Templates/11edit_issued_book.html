@@ -1,0 +1,49 @@
+{% extends '5dashboard.html' %}
+
+{% block content %}
+<div class="container mx-auto p-8 bg-white shadow-lg rounded-lg max-w-lg border border-gray-200">
+    <h1 class="text-3xl font-extrabold text-gray-900 mb-8 text-center">✏️ Edit Issued Book</h1>
+    
+    <form method="post" class="space-y-6">
+        {% csrf_token %}
+        
+        <!-- User Name -->
+        <div>
+            <label for="user" class="block text-sm font-medium text-gray-700 mb-2">User Name</label>
+            <input type="text" name="user" id="user" class="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2" placeholder="Enter user name" value="{{ form.user.value }}">
+        </div>
+
+        <!-- Phone Number -->
+        <div>
+            <label for="phone_number" class="block text-sm font-medium text-gray-700 mb-2">Phone Number</label>
+            <input type="text" name="phone_number" id="phone_number" class="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2" placeholder="Enter phone number" value="{{ form.phone_number.value }}">
+        </div>
+
+        <!-- Book Title -->
+        <div>
+            <label for="book" class="block text-sm font-medium text-gray-700 mb-2">Book Title</label>
+            <select name="book" id="book" class="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2">
+                {% for book in available_books %}
+                    <option value="{{ book.id }}" {% if book.id == form.book.value %}selected{% endif %}>{{ book.title }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Issue Date -->
+        <div>
+            <label for="issue_date" class="block text-sm font-medium text-gray-700 mb-2">Issue Date</label>
+            <input type="date" name="issue_date" id="issue_date" class="w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 p-2" value="{{ form.issue_date.value }}">
+        </div>
+
+        <!-- Submit Button -->
+        <div class="flex justify-end mt-4">
+            <button 
+                type="submit" 
+                class="w-full sm:w-auto bg-gradient-to-r from-blue-500 to-blue-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg hover:from-blue-600 hover:to-blue-800 focus:ring-2 focus:ring-blue-400 focus:ring-offset-2"
+            >
+                Update Record
+            </button>
+        </div>
+    </form>
+</div>
+{% endblock %}
